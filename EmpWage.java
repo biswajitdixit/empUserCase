@@ -1,3 +1,10 @@
+interface IEmpWage
+{
+    public void addCompany(String companyName, int wagePerHr, int maxWorkingDays, int maxWorkingHrs);
+
+    public void calculateTotalWage();
+}
+
 class CompanyEmpWage
 {
     // instance constants
@@ -22,10 +29,10 @@ class CompanyEmpWage
         this.totalEmpWage = totalEmpWage;
     }
 
+    @Override
     public String toString()
     {
         System.out.println("Details of " + COMPANY_NAME + " employee");
-        System.out.println("-----------------------------------------------------");
         System.err.println("Wage per hour:" + WAGE_PER_HR);
         System.out.println("Maximum working days:" + MAX_WORKING_DAYS);
         System.out.println("Maximum working hours:" + MAX_WORKING_HRS);
@@ -33,7 +40,7 @@ class CompanyEmpWage
     }
 }
 
-public class EmpWage
+class EmpWage implements IEmpWage
 {
     // class constants
     public static final int PART_TIME = 1;
@@ -49,7 +56,7 @@ public class EmpWage
         index = 0;
     }
 
-    void addCompany(String companyName, int wagePerHr, int maxWorkingDays, int maxWorkingHrs)
+    public void addCompany(String companyName, int wagePerHr, int maxWorkingDays, int maxWorkingHrs)
     {
         companies[index++] = new CompanyEmpWage(companyName, wagePerHr, maxWorkingDays, maxWorkingHrs);
     }
@@ -63,16 +70,16 @@ public class EmpWage
     {
         switch (empType)
         {
-        case FULL_TIME:
-            return 8;
-        case PART_TIME:
-            return 4;
-        default:
-            return 0;
+            case FULL_TIME:
+                return 8;
+            case PART_TIME:
+                return 4;
+            default:
+                return 0;
         }
     }
 
-    void calculateTotalWage()
+    public void calculateTotalWage()
     {
         for (CompanyEmpWage company : companies)
         {
@@ -85,7 +92,6 @@ public class EmpWage
     int calculateTotalWage(CompanyEmpWage companyEmpWage)
     {
         System.out.println("Computation of total wage of " + companyEmpWage.COMPANY_NAME + " employee");
-        System.out.println("-----------------------------------------------------");
         System.out.printf("%5s     %5s     %5s     %5s\n", "Day", "Workinghrs", "Wage", "Total working hrs");
 
         int workingHrs, totalWage = 0;
